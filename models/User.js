@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     minLength: 8,
     maxLength: 1024,
+    select: false
   },
   bio: {
     type: String,
