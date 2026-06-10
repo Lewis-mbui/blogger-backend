@@ -1,3 +1,4 @@
 {
-  "db": "blogger_db"
+  "db": "blogger_db",
+  "jwtPrivateKey": "BLOGGER_JWT_SECRET"
 }
