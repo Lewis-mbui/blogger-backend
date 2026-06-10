@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 
+app.use(express.json());
 app.get('/health', (req, res) => {
-  res.send('Hello world');
+  res.send({status: 'ok'});
 });
 
 mongoose.connect(config.get('db'))
