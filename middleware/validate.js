@@ -4,6 +4,8 @@ module.exports = (schema) => (req, res, next) => {
 
     if (error) return res.status(400).json({
       message: "Validation error",
+      code: "VALIDATION_ERROR",
+      message: "Validation failed",
       errors: error.details.map(err => ({
         field: err.path.join('.'), // The field that caused the error
         message: err.message,     // The Joi generated/custom error message
