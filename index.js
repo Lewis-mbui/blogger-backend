@@ -1,21 +1,10 @@
 const app = require('./startup/app');
 const connectDb = require('./startup/connectDb');
+const registerProcessHandlers = require('./startup/processHandlers');
 
 let server;
 
-process.on("uncaughtException", (err) => {
-  console.error("UNCAUGHT EXCEPTION");
-  console.error(err);
-
-  process.exit(1);
-});
-
-process.on("unhandledRejection", (err) => {
-  console.error("UNHANDLED REJECTION");
-  console.error(err);
-
-  process.exit(1);
-});
+registerProcessHandlers(() => server);
 
 async function start() {
   try {
