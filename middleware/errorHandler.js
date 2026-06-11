@@ -7,7 +7,8 @@ module.exports = function(err, req, res, next) {
     return res.status(err.statusCode).json({
       status: "error",
       code: err.code,
-      message: err.message
+      message: err.message,
+      details: err.details
     });
   }
   

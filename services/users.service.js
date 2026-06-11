@@ -4,21 +4,27 @@ const ConflictError = require('../utils/errors/ConflictError');
 const hashPassword = require('../utils/hashPassword');
 const generateJwt = require('../utils/generateJwt');
 
-async function registerUser(user) {
+async function registerUser({name, email, password, bio, avatar}) {
   // if user exists throw an error
-  const existingUser = await User.findOne({email: user.email});
+  const existingUser = await User.findOne({email});
 
   if (existingUser)
     throw new ConflictError("Email already in use");
   
   // Email doesn't exist --> create new user
-  user = new User(_.pick(user, ['name', 'email', 'password', 'bio', 'avatar']));
+  const user = new User({
+    name,
+    email,
+    password,
+    bio,
+    avatar
+  });
   user.password = await hashPassword(user.password);
   await user.save();
 
   // generate token
   // return {_id, email, name, token}
-  const token = generateJwt(_.pick(user, ['_id']));
+  const token = generateJwt({id: user._id});
 
   return {
     user: {
