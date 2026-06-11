@@ -6,7 +6,6 @@ const generateJwt = require('../utils/generateJwt');
 async function registerUser(user) {
   // if email exists return 409
   const existingUser = await User.findOne({email: user.email});
-  console.log(existingUser);
 
   if (existingUser)
     throw new Error("Email already in use");
@@ -21,7 +20,9 @@ async function registerUser(user) {
   const token = generateJwt(_.pick(user, ['_id', 'email']));
 
   return {
-    ..._.pick(user, ['_id', 'name', 'email']),
+    user: {
+      ..._.pick(user, ['_id', 'name', 'email']),
+    },
     token
   }
 }

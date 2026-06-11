@@ -1,22 +1,34 @@
-const users = require('./routes/users.route');
-const health = require('./routes/health.route');
-const errorHandler = require('./middleware/errorHandler');
-const config = require('config');
-const mongoose = require('mongoose');
-const express = require('express');
-const app = express();
+const app = require('./startup/app');
+const connectDb = require('./startup/connectDb');
 
-app.use(express.json());
-app.use('/health', health)
-app.use('/api/users', users);
-app.use(errorHandler);
+let server;
 
+process.on("uncaughtException", (err) => {
+  console.error("UNCAUGHT EXCEPTION");
+  console.error(err);
 
-mongoose.connect(config.get('db'))
-  .then(() => console.log('connected to db...'))
-  .catch((err) => console.error(err.message));
-
-const port = process.env.PORT || 4000;
-app.listen(port, () => {
-  console.log(`Server started on port ${port}...`);
+  process.exit(1);
 });
+
+process.on("unhandledRejection", (err) => {
+  console.error("UNHANDLED REJECTION");
+  console.error(err);
+
+  process.exit(1);
+});
+
+async function start() {
+  try {
+    await connectDb();
+
+    const port = process.env.PORT || 4000;
+    server = app.listen(port, () => console.log(`Server started on port ${port}...`));
+  } catch (err) {
+    console.error("Failed to start application");
+    console.error(err);
+
+    process.exit(1)
+  }
+}
+
+start();
