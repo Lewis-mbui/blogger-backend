@@ -1,7 +1,7 @@
 const AppError = require('../utils/errors/AppError');
 
 module.exports = function(err, req, res, next) {
-  console.error(err.message, err);
+  // console.error(err.message, err);
 
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
