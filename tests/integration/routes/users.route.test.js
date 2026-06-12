@@ -4,17 +4,21 @@ const connectDb = require('../../../startup/connectDb');
 const app = require('../../../startup/app');
 const User = require('../../../models/User');
 
-describe('/api/users', () => {
+describe('/api/users', () => {  
   beforeAll(async () => {
     await connectDb();
   });
 
-  afterAll(async () => {
-    await mongoose.connection.close();
+  beforeEach(async () => {
+    await User.deleteMany({});
   });
 
   afterEach(async () => {
     await User.deleteMany({});
+  });
+
+  afterAll(async () => {
+    await mongoose.connection.close();
   });
 
   describe('POST /', () => {

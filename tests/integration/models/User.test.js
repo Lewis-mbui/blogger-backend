@@ -11,6 +11,10 @@ describe('User', () => {
       await mongoose.connection.close();
     });
 
+    beforeEach(async () => {
+      await User.deleteMany({});
+    })
+
     afterEach(async () => {
       await User.deleteMany({});
     })
@@ -20,7 +24,7 @@ describe('User', () => {
     const password = 'Password123!';
 
     const user = new User({
-      name: 'aa',
+      name: 'aaa',
       email: 'a@mail.com',
       password,
     });
