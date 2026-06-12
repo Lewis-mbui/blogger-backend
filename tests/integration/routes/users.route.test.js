@@ -142,6 +142,15 @@ describe('/api/users', () => {
       expect(res.body.details[0].field).toMatch(/.*password.*/i);
     });
 
+    it('should return 409 if user already exists', async () => {
+      const user = new User({name: 'aaa', email: 'a@mail.com', password: 'Password123!'});
+      await user.save();
+
+      const res = await exec();
+
+      expect(res.status).toBe(409);
+    });
+
     it('should return the user if request is valid', async () => {
       const res = await exec();
 
