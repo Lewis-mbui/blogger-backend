@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const User = require('../models/User');
 const ConflictError = require('../utils/errors/ConflictError');
-const hashPassword = require('../utils/hashPassword');
 const generateJwt = require('../utils/generateJwt');
 
 async function registerUser({name, email, password, bio, avatar}) {
@@ -11,7 +10,7 @@ async function registerUser({name, email, password, bio, avatar}) {
   if (existingUser)
     throw new ConflictError("Email already in use");
   
-  // Email doesn't exist --> create new user
+  // User doesn't exist --> create new user
   const user = new User({
     name,
     email,
@@ -19,7 +18,6 @@ async function registerUser({name, email, password, bio, avatar}) {
     bio,
     avatar
   });
-  user.password = await hashPassword(user.password);
   await user.save();
 
   // generate token

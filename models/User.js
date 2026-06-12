@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -38,5 +39,18 @@ const userSchema = new mongoose.Schema({
     match: [/^https?:\/\/.+/, "Avatar must be valid URL"]
   }
 }, {timestamps: true});
+
+// HASH PASSWORDS
+// this middleware is ran every time .create() or
+// .save() are called
+userSchema.pre("save", async function () {
+  // prevent hashing again if password was not modified
+  if (!this.isModified("password")) return;
+
+  // Hash password if it is being modified
+  // Or being defined afresh
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
 
 module.exports = mongoose.model('User', userSchema);
