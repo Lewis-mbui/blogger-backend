@@ -20,16 +20,9 @@ async function registerUser({name, email, password, bio, avatar}) {
   });
   await user.save();
 
-  // generate token
-  // return {_id, email, name, token}
   const token = generateJwt({id: user._id});
 
-  return {
-    user: {
-      ..._.pick(user, ['_id', 'name', 'email']),
-    },
-    token
-  }
+  return {user, token};
 }
 
 module.exports = {
