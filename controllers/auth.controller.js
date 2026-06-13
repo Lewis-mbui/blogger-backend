@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const successResponse = require('../utils/response/successResponse');
 const {loginUser} = require('../services/auth.service');
 
