@@ -11,10 +11,6 @@ describe('User', () => {
       await mongoose.connection.close();
     });
 
-    beforeEach(async () => {
-      await User.deleteMany({});
-    })
-
     afterEach(async () => {
       await User.deleteMany({});
     })

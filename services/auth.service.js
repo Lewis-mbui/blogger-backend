@@ -13,7 +13,7 @@ const loginUser = async ({email, password}) => {
 
   const isValid = await bcrypt.compare(password, user.password);
   if (!isValid)
-    throw new AppError("Invalid email or password", 401, "BAD_REQUEST");
+    throw new AppError("Invalid email or password", 400, "BAD_REQUEST");
 
   const token = generateJwt({id: user._id});
   return { user, token }

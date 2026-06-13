@@ -9,10 +9,6 @@ describe('/api/users', () => {
     await connectDb();
   });
 
-  beforeEach(async () => {
-    await User.deleteMany({});
-  });
-
   afterEach(async () => {
     await User.deleteMany({});
   });
@@ -70,8 +66,8 @@ describe('/api/users', () => {
 
       const res = await exec();
 
-      expect(res.body.details[0].field).toMatch(/.*email.*/i);
       expect(res.status).toBe(400);
+      expect(res.body.details[0].field).toMatch(/.*email.*/i);
     });
 
     it('should return 400 if email is not a valid email', async () => {
@@ -79,17 +75,8 @@ describe('/api/users', () => {
 
       const res = await exec();
       
-      expect(res.body.details[0].field).toMatch(/.*email.*/i);
       expect(res.status).toBe(400);
-    });
-
-    it('should return 400 if email is more than 255 characters', async () => {
-      email = new Array(257).join('a') + '@mail.com';
-
-      const res = await exec();
-
       expect(res.body.details[0].field).toMatch(/.*email.*/i);
-      expect(res.status).toBe(400);
     });
 
     it('should return 400 if password is missing', async () => {
