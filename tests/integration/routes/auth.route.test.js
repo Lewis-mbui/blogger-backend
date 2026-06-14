@@ -1,21 +1,16 @@
 const request = require('supertest');
-const mongoose = require('mongoose');
+const {
+  connectDatabase,
+  clearDatabase,
+  closeDatabase
+} = require('../dbHandler');
 const app = require('../../../startup/app');
-const connectDb = require('../../../startup/connectDb');
 const User = require('../../../models/User');
 
 describe('/api/auth', () => {
-  beforeAll(async () => {
-    await connectDb();
-  });
-
-  afterEach(async () => {
-    await User.deleteMany({});
-  });
-
-  afterAll(async () => {
-    await mongoose.connection.close();
-  });
+  beforeAll(async () => await connectDatabase());
+  afterEach(async () =>  await clearDatabase());
+  afterAll(async () => await closeDatabase());
 
   describe('POST /', () => {
     let email;

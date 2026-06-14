@@ -1,22 +1,17 @@
 const request = require('supertest');
-const mongoose = require('mongoose');
-const connectDb = require('../../../startup/connectDb');
+const {
+  connectDatabase,
+  clearDatabase,
+  closeDatabase
+} = require('../dbHandler');
 const User = require('../../../models/User');
 const {registerUser} = require('../../../services/users.service');
 const app = require('../../../startup/app');
 
 describe('auth middleware', () => {
-  beforeAll(async () => {
-    await connectDb();
-  });
-
-  afterAll(async () => {
-    await mongoose.connection.close();
-  });
-
-  afterEach(async () => {
-    await User.deleteMany({});
-  });
+  beforeAll(async () => await connectDatabase());
+  afterEach(async () =>  await clearDatabase());
+  afterAll(async () => await closeDatabase());
 
   let token;
 
