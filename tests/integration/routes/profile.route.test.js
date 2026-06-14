@@ -26,7 +26,7 @@ describe('/api/profile', () => {
       .auth(token, {type: "bearer"});
 
     beforeEach(async () => {
-      const {user, token: userToken} = await registerUser({
+      const {token: userToken} = await registerUser({
         name: 'aaa', 
         email: 'a@mail.com', 
         password: 'Password123!'
