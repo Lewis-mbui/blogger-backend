@@ -1,19 +1,14 @@
-const mongoose = require('mongoose');
+const {
+  connectDatabase,
+  clearDatabase,
+  closeDatabase
+} = require('../dbHandler');
 const User = require('../../../models/User');
-const connectDb = require('../../../startup/connectDb');
 
 describe('User', () => {
-  beforeAll(async () => {
-      await connectDb();
-    });
-  
-    afterAll(async () => {
-      await mongoose.connection.close();
-    });
-
-    afterEach(async () => {
-      await User.deleteMany({});
-    })
+  beforeAll(async () => await connectDatabase());
+  afterEach(async () =>  await clearDatabase());
+  afterAll(async () => await closeDatabase());
 
   it('should create a user with hashed password', async () => {
 

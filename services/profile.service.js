@@ -1,4 +1,5 @@
 const ConflictError = require('../utils/errors/ConflictError');
+const assertAllowedUpdates = require('../utils/assertAllowedUpdates');
 const User = require('../models/User');
 
 const getProfile = (userId) => {
@@ -6,6 +7,11 @@ const getProfile = (userId) => {
 }
 
 const updateProfile = async (userId, updates) => {
+  assertAllowedUpdates(
+    updates,
+    ["name", "email", "bio", "avatar"]
+  );
+
   if (updates.email) {
     const existingUser = await User.findOne({email: updates.email});
 
