@@ -10,7 +10,7 @@ const updateProfileSchema = Joi.object({
       "string.base": "Name must be a string",
       "string.min": "Name must be at least 2 characters",
       "string.max": "Name must be at most 50 characters",
-    }),
+  }),
   email: Joi.string()
     .email()
     .optional()
@@ -18,7 +18,7 @@ const updateProfileSchema = Joi.object({
     .lowercase()
     .messages({
       "string.email": "Please provide a valid email",
-    }),
+  }),
   bio: Joi.string()
     .max(500)
     .optional(),
