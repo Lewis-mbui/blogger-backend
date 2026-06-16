@@ -1,6 +1,5 @@
 const {createPost} = require('../services/posts.service');
 const successResponse = require('../utils/response/successResponse');
-// const _ = require('lodash');
 
 const createPostController = async (req, res) => {
   const newPost = await createPost(req.user.id, req.body);
