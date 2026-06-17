@@ -1,8 +1,7 @@
-const {createPost} = require('../../../services/posts.service');
-const Post = require('../../../models/Post');
-const expectCookies = require('supertest/lib/cookies');
+const {createPost} = require('../../../../services/posts.service');
+const Post = require('../../../../models/Post');
 
-jest.mock('../../../models/Post');
+jest.mock('../../../../models/Post');
 
 describe('Posts Service - createPost()', () => {
   let userId;
