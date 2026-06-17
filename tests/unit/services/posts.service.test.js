@@ -4,7 +4,7 @@ const expectCookies = require('supertest/lib/cookies');
 
 jest.mock('../../../models/Post');
 
-describe('Posts Service', () => {
+describe('Posts Service - createPost()', () => {
   let userId;
   let postData;
   let status;
