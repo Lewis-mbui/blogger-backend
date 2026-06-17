@@ -31,4 +31,28 @@ const createPostSchema = Joi.object({
   })
 }).required().messages({"any.required": "Post is required"});
 
-module.exports = createPostSchema;
+const getPostsSchema = Joi.object({
+  page: Joi.number()
+    .integer()
+    .min(1)
+    .messages({
+      'number.base': 'Page must be a valid number',
+      'number.integer': 'Page must be a whole number',
+      'number.min': 'Page must be at least 1'
+    }),
+  limit: Joi.number()
+    .integer()
+    .min(1)
+    .max(50)
+    .messages({
+      'number.base': 'Limit must be a valid number',
+      'number.integer': 'Limit must be a whole number',
+      'number.min': 'Limit must be at least 1',
+      'number.max': 'Limit cannot exceed 50'
+    })
+});
+
+module.exports = {
+  createPostSchema,
+  getPostsSchema
+};

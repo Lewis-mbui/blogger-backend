@@ -1,17 +1,20 @@
 const ValidationError = require('../utils/errors/ValidationError');
 
-module.exports = (schema) => (req, res, next) => {
-    const {error, value} = schema.validate(req.body, { abortEarly: false });
+module.exports = (schema, property = 'body') => (req, res, next) => {
+  const {error, value} = schema.validate(req[property], { 
+    abortEarly: false, 
+    stripUnknown: true 
+  });
 
-    if (error) {
-      const details = error.details.map(err => ({
-        field: err.path.join('.'), // The field that caused the error
-        message: err.message,     // The Joi generated/custom error message
-      }));
-  
-      throw new ValidationError("Validation error", details);
-    }
+  if (error) {
+    const details = error.details.map(err => ({
+      field: err.path.join('.'), // The field that caused the error
+      message: err.message,     // The Joi generated/custom error message
+    }));
 
-    req.body = value;
-    next();
+    throw new ValidationError("Validation error", details);
   }
+
+  req[property] = value;
+  next();
+}
