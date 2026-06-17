@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage --watchAll --verbose --runInBand",
+    "test": "jest",
     "test:integration": "jest --watch --verbose --runInBand tests/integration",
     "test:unit": "jest --watch --verbose tests/unit",
     "dev": "nodemon"
